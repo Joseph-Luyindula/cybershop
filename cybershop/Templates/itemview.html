@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}Smartphone Galaxy Pro - CYBERSHOP{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center space-x-2 text-sm text-gray-400 mb-8">
+        <a href="{% url 'index' %}" class="hover:text-cyber-blue transition-colors">Accueil</a>
+    </nav>
+
+{{ product }}
+        <!-- Product Info -->
+        <div>
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold mb-2">{{ product.name }}j</h1>
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400 mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-400">(4.7) • 234 avis</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">
+            {{ product.description }}
+                </p>
+            </div>
+
+            <!-- Price -->
+            <div class="mb-6">
+                <div class="flex items-center space-x-4 mb-2">
+                    <span class="text-4xl font-bold text-cyber-blue">{{ product.price }}$</span>
+
+                </div>
+                <p class="text-green-400 text-sm">
+                    <i class="fas fa-truck mr-1"></i>Livraison gratuite • En stock
+                </p>
+            </div>
+<section class="py-16 bg-cyber-gray/30">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="text-3xl font-bold text-cyber-purple">Similaires</h3>
+        </div>
+        
+        <div class="swiper tendances-swiper">
+            <div class="swiper-wrapper">
+                {% for x in similar %}
+                <div class="swiper-slide">
+                    <div class="bg-cyber-gray rounded-lg p-6 hover:shadow-lg hover:shadow-cyber-purple/10 transition-all group">
+                        <div class="relative mb-4">
+                            <img src="/placeholder.svg?height=200&width=300" alt="Tendance {{ nouveau.name }}" class="w-full h-48 object-cover rounded-lg">
+                        </div>
+                        <h4 class="text-lg font-semibold mb-2 group-hover:text-cyber-purple transition-colors">
+                 {{ x.name }}
+                        </h4>
+                        <p class="text-gray-400 text-sm mb-3">{{ x.description }}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-cyber-purple">{{ x.price }}$</span>
+                            <a href="{% url 'product' x.id %}" class="bg-cyber-purple text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Swiper for Nouveautés
+    const nouveautesSwiper = new Swiper('.nouveautes-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 4,
+            },
+        },
+        autoplay: {
+            delay: 3000,
+        },
+    });
+
+    // Initialize Swiper for Tendances
+    const tendancesSwiper = new Swiper('.tendances-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 4,
+            },
+        },
+        autoplay: {
+            delay: 4000,
+        },
+    });
+
+    // Initialize Swiper for Recommandations
+    const recommandationsSwiper = new Swiper('.recommandations-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 4,
+            },
+        },
+        autoplay: {
+            delay: 5000,
+        },
+    });
+});
+
+let viewTimers = {};
+let currentSlideIndex = null;
+
+const swiper = new Swiper('.swiper-container', {
+  slidesPerView: 1,
+  spaceBetween: 10,
+  on: {
+    slideChange: function () {
+      if (currentSlideIndex !== null && viewTimers[currentSlideIndex]) {
+        clearTimeout(viewTimers[currentSlideIndex]);
+        delete viewTimers[currentSlideIndex];
+      }
+
+      currentSlideIndex = this.activeIndex;
+      const slide = this.slides[currentSlideIndex];
+      const productId = slide.getAttribute('data-product-id');
+
+      viewTimers[currentSlideIndex] = setTimeout(() => {
+        registerView(productId);
+      }, 3000);
+    }
+  }
+});
+
+function registerView(productId) {
+  fetch('/register-view/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': getCSRFToken()
+    },
+    body: `product_id=${productId}`
+  })
+  .then(response => response.json())
+  .then(data => console.log("Vue enregistrée :", data))
+  .catch(err => console.error("Erreur d'enregistrement :", err));
+}
+
+function getCSRFToken() {
+  return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+</script>
+{% endblock %}
