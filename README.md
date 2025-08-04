@@ -12,7 +12,7 @@ Un projet Django simple qui recommande automatiquement des produits à un utilis
 ## Fonctionnalités
 
 - Recommandations personnalisées (catégories + prix + historique)
-- Détection automatique d’une vue après 3 secondes via Swiper.js
+- Détection automatique d’une vue après 5 secondes via Swiper.js
 - Produits similaires sur la fiche produit
 - Interface simple, orientée logique
 
@@ -23,8 +23,8 @@ Un projet Django simple qui recommande automatiquement des produits à un utilis
 ### 1. Cloner le projet
 
 ```bash
-git clone https://github.com/ton-utilisateur/mon-projet-recommandation.git
-cd mon-projet-recommandation
+git clone https://github.com/joseph-luyindula/cybershop.git
+cd cybershop
 ```
 
 ### 2. Créer et activer un environnement virtuel
@@ -67,15 +67,17 @@ Accède ensuite à `http://127.0.0.1:8000`.
 
 ## Structure des recommandations
 
-### Recommandation personnalisée (`get_recommended_products`)
+### Recommandation personnalisée (`global_recommendations`)
 - Se base sur les 10 derniers produits consultés
 - Récupère les catégories dominantes
 - Calcule la moyenne de prix
 - Filtre des produits similaires non encore consultés
+> À savoir au début il peut arriver qu'il recommande un produit d'une autre catégorie mais dont le prix et assez proche des prix que vous observez 
 
 ### Produits similaires (`mini_recommendation`)
 - Recommande des produits partageant les mêmes catégories qu’un produit donné
-
+> Fonctionnalités utiliser dans la page d'un article 
+ 
 ---
 
 ## Vue automatique après 3 secondes (Swiper.js)
@@ -111,18 +113,13 @@ viewTimers[currentSlideIndex] = setTimeout(() => {
 | `models.py` | Structure de la base de données |
 | `views.py` | Vues Django pour recommandations |
 | `templates/` | Interface HTML minimaliste |
-| `static/js/` | Swiper + logique JS de vue différée |
 | `utils.py` | Fonctions de logique de recommandation |
 
 ---
 
 ## À venir (suggestions d'évolution)
 
-- Intégration API (Django REST Framework)
-- Ajout de “likes” ou “wishlist” pour affiner l’algorithme
-- Interface d’admin enrichie (graphes d’analyse de vues)
-- Traduction multilingue (fr/en)
-- Recommandations anonymes (via session ou cookie)
+- récupérer certaines des données des utilisateurs (toute en ce rassurant que les identités, les informations de payement soit protégé) pour créer plus tard un modèle de machines learnning.
 
 ---
 
