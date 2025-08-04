@@ -119,8 +119,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
 	str(BASE_DIR)+"/cybershop/static",
-	str(BASE_DIR)+"/theme/static",
-	str(BASE_DIR)+"/theme/static_src",
 ]
 
 MEDIA_URL = '/media/'

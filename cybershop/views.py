@@ -26,7 +26,6 @@ def index(request):
         	context['recommendations'] = Product.objects.all().order_by('?')[:10]
         else:
         	context['recommendations'] = recommendations
-    print(context)
     return render(request, 'index.html', context=context)
 
 

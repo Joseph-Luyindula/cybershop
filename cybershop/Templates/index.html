@@ -23,13 +23,11 @@
         
         <div class="swiper nouveautes-swiper">
             <div class="swiper-wrapper">
-                {% for nouveau in nouveaux %}
+{% for nouveau in nouveaux %}
                 <div class="swiper-slide">
                     <div class="bg-cyber-gray rounded-lg p-6 hover:shadow-lg hover:shadow-cyber-blue/10 transition-all group">
                         <div class="relative mb-4">
-                            <img
-                src="{% static 'cybershop/hacker-5151533.jpg' %}"
-                alt="Produit {{ nouveau.name }}" class="w-full h-48 object-cover rounded-lg">
+                            <img src="{{ thephoto }}" alt="Produit {{ nouveau.name }}" class="w-full h-48 object-cover rounded-lg">
                   img
                             <div class="absolute top-2 right-2 bg-cyber-purple text-white px-2 py-1 rounded-full text-sm">
                                 Nouveau
@@ -47,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
+{% endfor %}
             </div>
             <div class="swiper-pagination"></div>
         </div>
@@ -67,7 +65,7 @@
                 <div class="swiper-slide">
                     <div class="bg-cyber-gray rounded-lg p-6 hover:shadow-lg hover:shadow-cyber-blue/10 transition-all group">
                         <div class="relative mb-4">
-                            <img src="{% static 'cybershop/hacker-5151533.jpg' %}" alt="Recommandation {{ recommandation.name }}" class="w-full h-48 object-cover rounded-lg">
+                            <img src="{{ thephoto }}" alt="Recommandation {{ recommandation.name }}" class="w-full h-48 object-cover rounded-lg">
                             <div class="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded-full text-sm">
                                 <i class="fas fa-star mr-1"></i>Recommandé
                             </div>
@@ -104,7 +102,7 @@
                 <div class="swiper-slide">
                     <div class="bg-cyber-gray rounded-lg p-6 hover:shadow-lg hover:shadow-cyber-purple/10 transition-all group">
                         <div class="relative mb-4">
-                            <img src="{% static 'cybershop/hacker-5151533.jpg' %}" alt="Tendance {{ nouveau.name }}" class="w-full h-48 object-cover rounded-lg">
+                            <img src="{{ thephoto }}" alt="Tendance {{ nouveau.name }}" class="w-full h-48 object-cover rounded-lg">
                             <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm">
                                 <i class="fas fa-fire mr-1"></i>Tendance
                             </div>
